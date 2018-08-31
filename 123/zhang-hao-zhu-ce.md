@@ -3,7 +3,7 @@
 在对接积分商城之前，开发者需要先注册账号，在后台获取分配的应用标识**AppKey**和密钥**AppSecret**
 
 1. 登陆云猫官网进行注册：
-   [https://](http://hd.dlp.duiba.com.cn/)www.yummall.cn
+   [https://www.yummall.cn](https://www.yummall.cn)
 2. 注册账号时会自动创建一个应用，每个应用都是独立的管理后台，开发者可以根据自身情况创建多个应用。
 3. 选择应用，在配置信息中获取对应的**appKey**和**appSecret**，详见下图
 
