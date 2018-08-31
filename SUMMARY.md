@@ -9,7 +9,7 @@
 * [开发对接](6666.md)
   * [免登录地址接口](6666/mian-deng-lu-di-zhi-jie-kou.md)
   * [扣积分接口](6666/kou-ji-fen-jie-kou.md)
-* [首页功能](shou-ye-gong-neng.md)
+* [客户端接入](shou-ye-gong-neng.md)
 
 ## 使用文档
 
