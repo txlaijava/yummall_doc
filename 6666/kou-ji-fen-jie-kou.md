@@ -55,235 +55,79 @@
 
 java
 
-[**点击下载（java开发包）**](https://github.com/duiba-Tech/duiba-java-sdk/archive/master.zip)
+**点击下载（java开发包）**
 
-```
-@RequestMapping
-(
-"/consume"
-)
-
+```java
+@RequestMapping("/hook")
 @ResponseBody
-public
- String 
-consume
-(HttpServletRequest request)
-{
-     CreditTool tool = 
-new
- CreditTool(appKey, appSecret);
-     
-boolean
- success = 
-false
-;
-     String errorMessage = 
-""
-;
-     String bizId =
-null
-;
-     Long credits=
-0L
-;
- 
-try
- {
+ public String hook(HttpServletRequest request) {
+     CreditTool tool = new CreditTool(appKey, appSecret);
+     boolean success = false;
+     String errorMessage = "";
+     String bizId =null;
+     Long credits=0L;
+ try {
      CreditConsumeParams params = tool.parseCreditConsume(request);
 
-     bizId = todo(); 
-//开发者业务订单号，保证唯一不重复
-
-     credits = getCredits(); 
-// getCredits()是根据开发者自身业务，获取的用户最新剩余积分数。
-
-     success = 
-true
-;
- } 
-catch
- (Exception e) {
-     success = 
-false
-;
+     bizId = todo(); //开发者业务订单号，保证唯一不重复
+     credits = getCredits(); // getCredits()是根据开发者自身业务，获取的用户最新剩余积分数。
+     success = true;
+ } catch (Exception e) {
+     success = false;
      errorMessage = e.getMessage();
      e.printStackTrace();
  }
-     CreditConsumeResult ccr = 
-new
- CreditConsumeResult(success);
+     CreditConsumeResult ccr = new CreditConsumeResult(success);
      ccr.setBizId(bizId);
      ccr.setErrorMessage(errorMessage);
      ccr.setCredits(credits);
-     
-return
- ccr.toString();
-//返回扣积分结果json信息
-
+     return ccr.toString();//返回扣积分结果json信息
  }
-
 ```
 
 php
 
-**开发工具包 ：**[**点击打开**](http://home.duiba.com.cn/php.html?_blank)
-
-```
+```php
 /*
 *  积分消耗请求的解析方法
 *  当用户进行兑换时，兑吧会发起积分扣除请求，开发者收到请求后，可以通过此方法进行签名验证与解析，然后返回相应的格式
 */
-function
-parseCreditConsume
-($appKey,$appSecret,$request_array)
-{
-    
-if
-($request_array[
-"appKey"
-] != $appKey){
-        
-throw
-new
-Exception
-(
-"appKey not match"
-);
+function parseCreditConsume($appKey,$appSecret,$request_array){
+    if($request_array["appKey"] != $appKey){
+        throw new Exception("appKey not match");
     }
-    
-if
-($request_array[
-"timestamp"
-] == 
-null
- ){
-        
-throw
-new
-Exception
-(
-"timestamp can't be null"
-);
+    if($request_array["timestamp"] == null ){
+        throw new Exception("timestamp can't be null");
     }
     $verify=signVerify($appSecret,$request_array);
-    
-if
-(!$verify){
-        
-throw
-new
-Exception
-(
-"sign verify fail"
-);
+    if(!$verify){
+        throw new Exception("sign verify fail");
     }
-    $ret=
-array
-(
-"appKey"
-=
->
-$request_array[
-"appKey"
-],
-"credits"
-=
->
-$request_array[
-"credits"
-],
-"timestamp"
-=
->
-$request_array[
-"timestamp"
-],
-        
-"description"
-=
->
-$request_array[
-"description"
-],
-"orderNum"
-=
->
-$request_array[
-"orderNum"
-]);
-    
-return
- $ret;
+    $ret=array("appKey"=>$request_array["appKey"],"credits"=>$request_array["credits"],"timestamp"=>$request_array["timestamp"],
+        "description"=>$request_array["description"],"orderNum"=>$request_array["orderNum"]);
+    return $ret;
 }
-
 ```
 
 .net
 
-**开发工具包：**[**点击打开**](http://home.duiba.com.cn/net.html?blank)
-
-```
-/*
-*  积分消耗请求的解析方法,重点在于方法中的三重验证
-*  当用户进行兑换时，兑吧会发起积分扣除请求，开发者收到请求后可以通过此方法进行签名验证与解析，然后返回相应的格式
-*/
-public
- Hashtable 
-parseCreditConsume
-(
-string
- appKey,
-string
- appSecret,HttpRequest request
-)
-
+```java
+public Hashtable parseCreditConsume(string appKey,string appSecret,HttpRequest request)
 {
-    
-if
-(!request.Params[
-"appKey"
-].Equals(appKey)){
-        
-throw
-new
- Exception(
-"appKey not match"
-);
+    if(!request.Params["appKey"].Equals(appKey)){
+        throw new Exception("appKey not match");
     }
-    
-if
-(request.Params[
-"timestamp"
-] == 
-null
- ){
-        
-throw
-new
- Exception(
-"timestamp can't be null"
-);
+    if(request.Params["timestamp"] == null ){
+        throw new Exception("timestamp can't be null");
     }
     Hashtable hshTable = duiba.GetUrlParams(request);
 
-    
-bool
- verify=duiba.SignVerify(appSecret,hshTable);
-    
-if
-(!verify){
-        
-throw
-new
- Exception(
-"sign verify fail"
-);
+    bool verify=duiba.SignVerify(appSecret,hshTable);
+    if(!verify){
+        throw new Exception("sign verify fail");
     }
-    
-return
- hshTable;
+    return hshTable;
 }
-
 ```
 
 
