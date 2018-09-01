@@ -21,5 +21,49 @@
 
 3. 开发者服务器端需要开发一个支持重定向的接口实现动态生成免登录url地址，该接口地址配置在客户端，用户通过点击该地址访问积分商城。
 
+### 代码示例 {#代码示例}
+
+java
+
+```java
+CreditTool tool=new CreditTool(appKey, appSecret);
+Map params=new HashMap();
+params.put("uid","userId001");
+params.put("credits","100");
+if(redirect!=null){
+ // redirect是目标页面地址，如果要跳转到积分商城指定页面，redirect地址就是目标页面地址
+ // 此处请设置成一个外部传进来的参数，方便运营灵活配置
+ params.put("redirect", redirect);
+}
+String url=tool.buildUrlWithSign("https://www.yummall.cn/autoLogin/autologin?",params);
+//此url即为免登录url
+```
+
+php
+
+```php
+$url=buildRedirectAutoLoginRequest($appKey,$appSecret,$uid,$credits,$redirect)
+```
+
+.net
+
+```java
+string url = "https://www.yummall.cn/autoLogin/autologin";
+string uid = "userId001";
+int credits = 9999;
+
+Hashtable hshTable = new Hashtable();
+hshTable.Add("uid", uid);
+hshTable.Add("credits", credits);
+if(redirect!=null){
+ //redirect为商城直达的目标页面地址，如果要跳转的目标页面不是积分商城首页，改地址必须配置
+ hshTable.Add("redirect", redirect);
+}
+url = duiba.BuildUrlWithSign(url, hshTable, appKey, appSecret);
+```
+
+  
+
+
 
 
