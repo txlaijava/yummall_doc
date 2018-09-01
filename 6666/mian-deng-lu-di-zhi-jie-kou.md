@@ -1,6 +1,4 @@
-# 配置积分商城登陆地址接口
-
-## 一、免登录URL生成 {#二、免登录url生成}
+# 免登录URL生成
 
 #### 输入参数\(Get请求方式传参\) {#输入参数get请求方式传参}
 
@@ -61,9 +59,6 @@ if(redirect!=null){
 }
 url = duiba.BuildUrlWithSign(url, hshTable, appKey, appSecret);
 ```
-
-  
-
 
 
 
